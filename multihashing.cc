@@ -2,6 +2,11 @@
 #include <node_buffer.h>
 #include <v8.h>
 #include <stdint.h>
+#include <node.h>
+#include <node_buffer.h>
+#include <v8.h>
+#include <stdint.h>
+#include <stdio.h>
 
 extern "C" {
     #include "bcrypt.h"
@@ -23,6 +28,7 @@ extern "C" {
     #include "sha1.h",
     #include "x15.h"
 	#include "fresh.h"
+    #include "zr5.h"
 }
 
 #include "boolberry.h"
@@ -47,7 +53,7 @@ Handle<Value> quark(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     quark_hash(input, output, input_len);
@@ -88,17 +94,17 @@ Handle<Value> scrypt(const Arguments& args) {
 
    if(!Buffer::HasInstance(target))
        return except("Argument should be a buffer object.");
-    
+
    Local<Number> numn = args[1]->ToNumber();
    unsigned int nValue = numn->Value();
    Local<Number> numr = args[2]->ToNumber();
    unsigned int rValue = numr->Value();
-   
+
    char * input = Buffer::Data(target);
    char output[32];
 
    uint32_t input_len = Buffer::Length(target);
-   
+
    scrypt_N_R_1_256(input, output, nValue, rValue, input_len);
 
    Buffer* buff = Buffer::New(output, 32);
@@ -228,7 +234,7 @@ Handle<Value> skein(const Arguments& args) {
     char output[32];
 
     uint32_t input_len = Buffer::Length(target);
-    
+
     skein_hash(input, output, input_len);
 
     Buffer* buff = Buffer::New(output, 32);
@@ -249,7 +255,7 @@ Handle<Value> groestl(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     groestl_hash(input, output, input_len);
@@ -272,7 +278,7 @@ Handle<Value> groestlmyriad(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     groestlmyriad_hash(input, output, input_len);
@@ -295,7 +301,7 @@ Handle<Value> blake(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     blake_hash(input, output, input_len);
@@ -318,7 +324,7 @@ Handle<Value> fugue(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     fugue_hash(input, output, input_len);
@@ -341,7 +347,7 @@ Handle<Value> qubit(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     qubit_hash(input, output, input_len);
@@ -364,7 +370,7 @@ Handle<Value> hefty1(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     hefty1_hash(input, output, input_len);
@@ -387,7 +393,7 @@ Handle<Value> shavite3(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     shavite3_hash(input, output, input_len);
@@ -403,7 +409,7 @@ Handle<Value> cryptonight(const Arguments& args) {
 
     if (args.Length() < 1)
         return except("You must provide one argument.");
-    
+
     if (args.Length() >= 2) {
         if(!args[1]->IsBoolean())
             return except("Argument 2 should be a boolean");
@@ -417,7 +423,7 @@ Handle<Value> cryptonight(const Arguments& args) {
 
     char * input = Buffer::Data(target);
     char output[32];
-    
+
     uint32_t input_len = Buffer::Length(target);
 
     if(fast)
@@ -574,7 +580,31 @@ Handle<Value> fresh(const Arguments& args) {
     return scope.Close(buff->handle_);
 }
 
+Handle<Value> zr5(const Arguments& args) {
+    HandleScope scope;
+
+	//printf("ZR5 DEBUG MARKER:\n");
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+    Local<Object> target = args[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        return except("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char output[32];
+
+    unsigned int dSize = Buffer::Length(target);
+
+    zr5_hash((uint8_t *)input, (uint8_t *)output, dSize);
+
+    Buffer* buff = Buffer::New(output, 32);
+    return scope.Close(buff->handle_);
+}
+
 void init(Handle<Object> exports) {
+	//printf("ZR5 DEBUG INIT:\n");
     exports->Set(String::NewSymbol("quark"), FunctionTemplate::New(quark)->GetFunction());
     exports->Set(String::NewSymbol("x11"), FunctionTemplate::New(x11)->GetFunction());
     exports->Set(String::NewSymbol("scrypt"), FunctionTemplate::New(scrypt)->GetFunction());
@@ -597,6 +627,9 @@ void init(Handle<Object> exports) {
     exports->Set(String::NewSymbol("sha1"), FunctionTemplate::New(sha1)->GetFunction());
     exports->Set(String::NewSymbol("x15"), FunctionTemplate::New(x15)->GetFunction());
     exports->Set(String::NewSymbol("fresh"), FunctionTemplate::New(fresh)->GetFunction());
+    exports->Set(String::NewSymbol("zr5"), FunctionTemplate::New(zr5)->GetFunction());
+    exports->Set(String::NewSymbol("ziftr"), FunctionTemplate::New(zr5)->GetFunction());
 }
 
 NODE_MODULE(multihashing, init)
+
