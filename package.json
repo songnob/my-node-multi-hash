@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ZiftrCOIN/node-multi-hashing.git"
+        "url": "https://github.com/ComputerCraftr/node-multi-hashing.git"
     },
     "dependencies" : {
         "bindings" : "*"
@@ -27,6 +27,7 @@
         "shavite",
         "fugue",
         "sha1",
-        "zr5"
+        "zr5",
+        "poly"
     ]
 }
