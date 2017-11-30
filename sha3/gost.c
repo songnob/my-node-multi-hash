@@ -57,7 +57,7 @@ extern "C"{
 
 
 // Tables for function F
-const unsigned long long T[8][256] = {
+const unsigned long long TT[8][256] = {
 		{
 				0xE6F87E5C5B711FD0,0x258377800924FA16,0xC849E07E852EA4A8,0x5B4686A18F06C16A,
 				0x0B32E9A2D77B416E,0xABDA37A467815C66,0xF61796A81A686676,0xF5DC0B706391954B,
@@ -776,91 +776,91 @@ void F(unsigned char *state)
 {
 	unsigned long long return_state[8];
 	register unsigned long long r = 0;
-	r ^= T[0][state[56]];
-	r ^= T[1][state[48]];
-	r ^= T[2][state[40]];
-	r ^= T[3][state[32]];
-	r ^= T[4][state[24]];
-	r ^= T[5][state[16]];
-	r ^= T[6][state[8]];
-	r ^= T[7][state[0]];
+	r ^= TT[0][state[56]];
+	r ^= TT[1][state[48]];
+	r ^= TT[2][state[40]];
+	r ^= TT[3][state[32]];
+	r ^= TT[4][state[24]];
+	r ^= TT[5][state[16]];
+	r ^= TT[6][state[8]];
+	r ^= TT[7][state[0]];
 	return_state[0] = r;
 	r = 0;
 
-	r ^= T[0][state[57]];
-	r ^= T[1][state[49]];
-	r ^= T[2][state[41]];
-	r ^= T[3][state[33]];
-	r ^= T[4][state[25]];
-	r ^= T[5][state[17]];
-	r ^= T[6][state[9]];
-	r ^= T[7][state[1]];
+	r ^= TT[0][state[57]];
+	r ^= TT[1][state[49]];
+	r ^= TT[2][state[41]];
+	r ^= TT[3][state[33]];
+	r ^= TT[4][state[25]];
+	r ^= TT[5][state[17]];
+	r ^= TT[6][state[9]];
+	r ^= TT[7][state[1]];
 	return_state[1] = r;
 	r = 0;
 
-	r ^= T[0][state[58]];
-	r ^= T[1][state[50]];
-	r ^= T[2][state[42]];
-	r ^= T[3][state[34]];
-	r ^= T[4][state[26]];
-	r ^= T[5][state[18]];
-	r ^= T[6][state[10]];
-	r ^= T[7][state[2]];
+	r ^= TT[0][state[58]];
+	r ^= TT[1][state[50]];
+	r ^= TT[2][state[42]];
+	r ^= TT[3][state[34]];
+	r ^= TT[4][state[26]];
+	r ^= TT[5][state[18]];
+	r ^= TT[6][state[10]];
+	r ^= TT[7][state[2]];
 	return_state[2] = r;
 	r = 0;
 
-	r ^= T[0][state[59]];
-	r ^= T[1][state[51]];
-	r ^= T[2][state[43]];
-	r ^= T[3][state[35]];
-	r ^= T[4][state[27]];
-	r ^= T[5][state[19]];
-	r ^= T[6][state[11]];
-	r ^= T[7][state[3]];
+	r ^= TT[0][state[59]];
+	r ^= TT[1][state[51]];
+	r ^= TT[2][state[43]];
+	r ^= TT[3][state[35]];
+	r ^= TT[4][state[27]];
+	r ^= TT[5][state[19]];
+	r ^= TT[6][state[11]];
+	r ^= TT[7][state[3]];
 	return_state[3] = r;
 	r = 0;
 
-	r ^= T[0][state[60]];
-	r ^= T[1][state[52]];
-	r ^= T[2][state[44]];
-	r ^= T[3][state[36]];
-	r ^= T[4][state[28]];
-	r ^= T[5][state[20]];
-	r ^= T[6][state[12]];
-	r ^= T[7][state[4]];
+	r ^= TT[0][state[60]];
+	r ^= TT[1][state[52]];
+	r ^= TT[2][state[44]];
+	r ^= TT[3][state[36]];
+	r ^= TT[4][state[28]];
+	r ^= TT[5][state[20]];
+	r ^= TT[6][state[12]];
+	r ^= TT[7][state[4]];
 	return_state[4] = r;
 	r = 0;
 
-	r ^= T[0][state[61]];
-	r ^= T[1][state[53]];
-	r ^= T[2][state[45]];
-	r ^= T[3][state[37]];
-	r ^= T[4][state[29]];
-	r ^= T[5][state[21]];
-	r ^= T[6][state[13]];
-	r ^= T[7][state[5]];
+	r ^= TT[0][state[61]];
+	r ^= TT[1][state[53]];
+	r ^= TT[2][state[45]];
+	r ^= TT[3][state[37]];
+	r ^= TT[4][state[29]];
+	r ^= TT[5][state[21]];
+	r ^= TT[6][state[13]];
+	r ^= TT[7][state[5]];
 	return_state[5] = r;
 	r = 0;
 
-	r ^= T[0][state[62]];
-	r ^= T[1][state[54]];
-	r ^= T[2][state[46]];
-	r ^= T[3][state[38]];
-	r ^= T[4][state[30]];
-	r ^= T[5][state[22]];
-	r ^= T[6][state[14]];
-	r ^= T[7][state[6]];
+	r ^= TT[0][state[62]];
+	r ^= TT[1][state[54]];
+	r ^= TT[2][state[46]];
+	r ^= TT[3][state[38]];
+	r ^= TT[4][state[30]];
+	r ^= TT[5][state[22]];
+	r ^= TT[6][state[14]];
+	r ^= TT[7][state[6]];
 	return_state[6] = r;
 	r = 0;
 
-	r ^= T[0][state[63]];
-	r ^= T[1][state[55]];
-	r ^= T[2][state[47]];
-	r ^= T[3][state[39]];
-	r ^= T[4][state[31]];
-	r ^= T[5][state[23]];
-	r ^= T[6][state[15]];
-	r ^= T[7][state[7]];
+	r ^= TT[0][state[63]];
+	r ^= TT[1][state[55]];
+	r ^= TT[2][state[47]];
+	r ^= TT[3][state[39]];
+	r ^= TT[4][state[31]];
+	r ^= TT[5][state[23]];
+	r ^= TT[6][state[15]];
+	r ^= TT[7][state[7]];
 	return_state[7] = r;
 
 	memcpy(state,(unsigned char*)return_state,64);
