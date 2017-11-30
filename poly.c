@@ -13,14 +13,15 @@
 
 void poly_hash(const char* input, char* output, uint32_t len)
 {
-    sph_skein512_context     ctx_skein;
-    sph_shabal512_context       ctx_shabal1;
+    sph_skein512_context    ctx_skein;
+    sph_shabal512_context   ctx_shabal1;
     sph_echo512_context		ctx_echo1;
     sph_luffa512_context	ctx_luffa1;
     sph_fugue512_context	ctx_fugue1;
-    sph_gost512_context      ctx_gost;
+    sph_gost512_context     ctx_gost;
 
-    uint32_t hashA[16], hashB[16];
+    uint32_t hashA[16] __attribute__ ((aligned (64)));
+    uint32_t hashB[16] __attribute__ ((aligned (64)));
 
     sph_skein512_init(&ctx_skein);
     sph_skein512 (&ctx_skein, input, len);
