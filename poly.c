@@ -44,7 +44,7 @@ void poly_hash(const char* input, char* output, uint32_t len)
 
     sph_gost512_init (&ctx_gost);
     sph_gost512 (&ctx_gost, hashA, 64);
-    sph_gost512_close (&ctx_luffa1, hashB);
+    sph_gost512_close (&ctx_gost, hashB);
 
     memcpy(output, hashB, 32);
 
