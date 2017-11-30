@@ -7,7 +7,7 @@ extern "C" {
 
 #include <stdint.h>
 
-void poly_hash(const char* input, char* output);
+void poly_hash(const char* input, char* output, uint32_t len);
 
 #ifdef __cplusplus
 }
