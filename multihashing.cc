@@ -2,10 +2,6 @@
 #include <node_buffer.h>
 #include <v8.h>
 #include <stdint.h>
-#include <node.h>
-#include <node_buffer.h>
-#include <v8.h>
-#include <stdint.h>
 #include <stdio.h>
 
 extern "C" {
@@ -27,8 +23,9 @@ extern "C" {
     #include "nist5.h"
     #include "sha1.h",
     #include "x15.h"
-	#include "fresh.h"
+    #include "fresh.h"
     #include "zr5.h"
+    #include "poly.h"
 }
 
 #include "boolberry.h"
@@ -603,6 +600,28 @@ Handle<Value> zr5(const Arguments& args) {
     return scope.Close(buff->handle_);
 }
 
+Handle<Value> poly(const Arguments& args) {
+    HandleScope scope;
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+    Local<Object> target = args[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        return except("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char output[32];
+
+    uint32_t input_len = Buffer::Length(target);
+
+    poly_hash(input, output, input_len);
+
+    Buffer* buff = Buffer::New(output, 32);
+    return scope.Close(buff->handle_);
+}
+
 void init(Handle<Object> exports) {
 	//printf("ZR5 DEBUG INIT:\n");
     exports->Set(String::NewSymbol("quark"), FunctionTemplate::New(quark)->GetFunction());
@@ -629,6 +648,7 @@ void init(Handle<Object> exports) {
     exports->Set(String::NewSymbol("fresh"), FunctionTemplate::New(fresh)->GetFunction());
     exports->Set(String::NewSymbol("zr5"), FunctionTemplate::New(zr5)->GetFunction());
     exports->Set(String::NewSymbol("ziftr"), FunctionTemplate::New(zr5)->GetFunction());
+    exports->Set(String::NewSymbol("poly"), FunctionTemplate::New(poly)->GetFunction());
 }
 
 NODE_MODULE(multihashing, init)
