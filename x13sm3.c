@@ -19,7 +19,7 @@
 #include "sha3/sph_sm3.h"
 
 
-void x13_hash(const char* input, char* output, uint32_t len)
+void x13sm3_hash(const char* input, char* output, uint32_t len)
 {
     sph_blake512_context     ctx_blake;
     sph_bmw512_context       ctx_bmw;
