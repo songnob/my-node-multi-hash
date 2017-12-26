@@ -21,11 +21,12 @@ extern "C" {
     #include "cryptonight.h"
     #include "x13.h"
     #include "nist5.h"
-    #include "sha1.h",
+    #include "sha1.h"
     #include "x15.h"
     #include "fresh.h"
     #include "zr5.h"
     #include "poly.h"
+    #include "x13sm3.h"
 }
 
 #include "boolberry.h"
@@ -622,8 +623,29 @@ Handle<Value> poly(const Arguments& args) {
     return scope.Close(buff->handle_);
 }
 
+Handle<Value> x13sm3(const Arguments& args) {
+    HandleScope scope;
+
+    if (args.Length() < 1)
+        return except("You must provide one argument.");
+
+    Local<Object> target = args[0]->ToObject();
+
+    if(!Buffer::HasInstance(target))
+        return except("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char output[32];
+
+    uint32_t input_len = Buffer::Length(target);
+
+    x13sm3_hash(input, output, input_len);
+
+    Buffer* buff = Buffer::New(output, 32);
+    return scope.Close(buff->handle_);
+}
+
 void init(Handle<Object> exports) {
-	//printf("ZR5 DEBUG INIT:\n");
     exports->Set(String::NewSymbol("quark"), FunctionTemplate::New(quark)->GetFunction());
     exports->Set(String::NewSymbol("x11"), FunctionTemplate::New(x11)->GetFunction());
     exports->Set(String::NewSymbol("scrypt"), FunctionTemplate::New(scrypt)->GetFunction());
@@ -649,6 +671,8 @@ void init(Handle<Object> exports) {
     exports->Set(String::NewSymbol("zr5"), FunctionTemplate::New(zr5)->GetFunction());
     exports->Set(String::NewSymbol("ziftr"), FunctionTemplate::New(zr5)->GetFunction());
     exports->Set(String::NewSymbol("poly"), FunctionTemplate::New(poly)->GetFunction());
+    exports->Set(String::NewSymbol("x13sm3"), FunctionTemplate::New(x13sm3)->GetFunction());
+    exports->Set(String::NewSymbol("hsr"), FunctionTemplate::New(x13sm3)->GetFunction());
 }
 
 NODE_MODULE(multihashing, init)
