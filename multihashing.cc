@@ -26,7 +26,7 @@ extern "C" {
     #include "fresh.h"
     #include "zr5.h"
     #include "poly.h"
-    #include "x13sm3.h"
+    #include "blake2.h"
 }
 
 #include "boolberry.h"
@@ -639,8 +639,9 @@ Handle<Value> x13sm3(const Arguments& args) {
 
     uint32_t input_len = Buffer::Length(target);
 
-    x13sm3_hash(input, output, input_len);
-
+    // x13sm3_hash(input, output, input_len);
+    //blake2(out, outlen, in, inlen, nullptr, 0);
+    blake2(output, 32, input, input_len, nullptr, 0);
     Buffer* buff = Buffer::New(output, 32);
     return scope.Close(buff->handle_);
 }
